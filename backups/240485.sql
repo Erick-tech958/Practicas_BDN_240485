@@ -81,7 +81,7 @@ CREATE TABLE `tb_users` (
 
 LOCK TABLES `tb_users` WRITE;
 /*!40000 ALTER TABLE `tb_users` DISABLE KEYS */;
-INSERT INTO `tb_users` VALUES (1,'240196utxicotepec.edu.mx','Angel','52dcb810931e20f7aa2f49b3510d3805','2026-09-08 11:11:36','2026-09-09 17:41:51',NULL),(2,'2405586utxicotepec.edu.mx','Jonhy','52dcb810931e20f7aa2f49b3510d3805','2026-09-08 11:12:32','2026-09-09 17:41:51',NULL),(3,'2404436utxicotepec.edu.mx','Luis','52dcb810931e20f7aa2f49b3510d3805','2026-09-08 11:13:10','2026-09-09 17:41:51',NULL),(4,'240196@utxicotepec.edu.mx','Saul','ce311f9a3d94cb7038eb2ea051144c2f','2026-09-08 11:44:09','2026-09-09 18:10:52',NULL),(10,'mejia.luis@utxicotepec.edu.mx','Mejia','827ccb0eea8a706c4c34a16891f84e7b','2026-09-16 19:28:44',NULL,NULL);
+INSERT INTO `tb_users` VALUES (1,'240485utxicotepec.edu.mx','Uriel','52dcb810931e20f7aa2f49b3510d3805','2026-09-08 11:11:36','2026-09-09 17:41:51',NULL),(2,'2405586utxicotepec.edu.mx','Jonhy','52dcb810931e20f7aa2f49b3510d3805','2026-09-08 11:12:32','2026-09-09 17:41:51',NULL),(3,'2404436utxicotepec.edu.mx','Luis','52dcb810931e20f7aa2f49b3510d3805','2026-09-08 11:13:10','2026-09-09 17:41:51',NULL),(4,'240196@utxicotepec.edu.mx','Saul','ce311f9a3d94cb7038eb2ea051144c2f','2026-09-08 11:44:09','2026-09-09 18:10:52',NULL),(10,'mejia.luis@utxicotepec.edu.mx','Mejia','827ccb0eea8a706c4c34a16891f84e7b','2026-09-16 19:28:44',NULL,NULL);
 /*!40000 ALTER TABLE `tb_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
