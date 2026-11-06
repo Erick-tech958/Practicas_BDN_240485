@@ -1,5 +1,5 @@
 -- 1. CREACION DE USUARIOS REMOTOS
-CREATE USER IF NOT EXISTS 'angel.barrios'@'%' IDENTIFIED BY '240196'; -- super admin 
+CREATE USER IF NOT EXISTS 'uriel.perez'@'%' IDENTIFIED BY '240485'; -- super admin 
 CREATE USER IF NOT EXISTS 'marco.ramirez'@'%' IDENTIFIED BY 'qwerty123'; -- Profe
 CREATE USER IF NOT EXISTS 'luis.cazarez'@'%' IDENTIFIED BY '240343'; -- suport 
 CREATE USER IF NOT EXISTS 'jose.castillo'@'%' IDENTIFIED BY '240628'; -- segundo vendedor
@@ -8,7 +8,7 @@ CREATE USER IF NOT EXISTS 'aylin.esteban'@'%' IDENTIFIED BY '240853'; -- usuario
 CREATE USER IF NOT EXISTS 'juan.reyes'@'%' IDENTIFIED BY '240148'; -- usuario  
 
 -- 2. ASIGNACION DE PRIVILEGIOS DE SUPERUSUARIO
-GRANT ALL PRIVILEGES ON *.* TO 'angel.barrios'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'uriel.perez'@'%';
 
 GRANT SELECT, INSERT, UPDATE, DELETE
 ON db_test.*
@@ -34,7 +34,7 @@ GRANT SELECT, INSERT, UPDATE ON db_test.tb_users TO 'support';
 GRANT SELECT, INSERT, UPDATE ON db_test.tb_products TO 'seller';
 
 -- 5. ASIGNACION DE ROLES A LOS USUARIOS
-GRANT 'superadmin' TO 'angel.barrios'@'%';
+GRANT 'superadmin' TO 'uriel.perez'@'%';
 GRANT 'admin' TO 'marco.ramirez'@'%';
 GRANT 'support' TO 'luis.cazarez'@'%';
 GRANT 'seller' TO 'jose.castillo'@'%';
