@@ -1,10 +1,11 @@
-# Practicas de la Asignatura Optativa 1: Bases de Datos en la Nube
-## Ing. en Tecnologias de la Informacion e Innovacion Digital
-### Docente: M.T.I Marco A. Ramirez Hernandez
-Periodo: Septiembre - Diciembre 2026
+# Practica de la Asignatura Optativa I: Bases de Datos en la Nube
+## Ing. en Tecnologías de la Información e Innovación Digital 
+## Docente: M.T.I. Marco A Ramírez Hernández
+Periodo:Septiembre - Diciembre 2026
 
 ---
 
-|ID|Numero de Practica|Nombre de la Practica|Potenciador|Estatus|
+|ID|Numero de Práctica| Nombre de la Práctica|Potenciador|Estatus
 |---|---|---|---|---|
-|1.|Practica 02|Conexion Remota en MySQL|42|En Desarrollo|
+|1.|Metodologia de evaluacion de la materia|Transcribir en libreta y comprender la metodologia y fechas de evaluacion de la asignatura| 5|🟢concluida|
+|2.|Conexiones remotas para bases de datos SQL|Crear y administrar usuarios y privilegios para conexiones desde internet o redes locales| 60|🟢concluida|
