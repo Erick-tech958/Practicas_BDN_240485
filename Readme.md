@@ -5,7 +5,8 @@ Periodo:Septiembre - Diciembre 2026
 
 ---
 
-|ID|Numero de Práctica| Nombre de la Práctica|Potenciador|Estatus
+|ID|Numero de Práctica|Nombre de la Práctica|Potenciador|Estatus|
 |---|---|---|---|---|
-|1.|Metodologia de evaluacion de la materia|Transcribir en libreta y comprender la metodologia y fechas de evaluacion de la asignatura| 5|🟢concluida|
-|2.|Conexiones remotas para bases de datos SQL|Crear y administrar usuarios y privilegios para conexiones desde internet o redes locales| 60|🟢concluida|
+|1.|Práctica 02|Conexión Remota en MYSQL|42|💚Concluida|
+|2.|Conexiones Remotas para Bases de Datos SQL 1|Crear y administrar usuarios y privilegios para conexiones desde internet o redes locales|60|💚Concluida|
+|3.|Práctica 03|Manipulación de datos en conexiones remotas|100|💚Concluida|
