@@ -1,0 +1,8 @@
+{
+  "name": "diccionario-eer-db-test",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": { "dev": "vite", "build": "vite build", "preview": "vite preview" },
+  "devDependencies": { "@vitejs/plugin-react": "^4.3.4", "vite": "^6.0.7", "typescript": "^5.7.2" }
+}
