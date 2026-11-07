@@ -1,7 +1,7 @@
 -- 1. CREACION DE USUARIOS REMOTOS
 CREATE USER IF NOT EXISTS 'uriel.perez'@'%' IDENTIFIED BY '240485'; -- super admin 
 CREATE USER IF NOT EXISTS 'marco.ramirez'@'%' IDENTIFIED BY 'qwerty123'; -- Profe
-CREATE USER IF NOT EXISTS 'luis.cazarez'@'%' IDENTIFIED BY '240343'; -- suport 
+CREATE USER IF NOT EXISTS 'luis.cazare'@'%' IDENTIFIED BY '240343'; -- suport 
 CREATE USER IF NOT EXISTS 'jose.castillo'@'%' IDENTIFIED BY '240628'; -- segundo vendedor
 CREATE USER IF NOT EXISTS 'jonhy.neri'@'%' IDENTIFIED BY '240598'; -- primer vendedor 
 CREATE USER IF NOT EXISTS 'aylin.esteban'@'%' IDENTIFIED BY '240853'; -- usuario 
