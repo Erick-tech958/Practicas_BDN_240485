@@ -1,40 +1,94 @@
-# Diccionario de datos y modelo EER ? db_test
+# Práctica 03 - Base de Datos
 
-Aplicaci?n est?tica de una sola p?gina para explorar el diccionario de datos, el dashboard, las relaciones y el diagrama EER del respaldo `backups/240485_27.10.26.sql`. La aplicaci?n se encuentra en `docs/index.html`, comparte un ?nico modelo estructural y no requiere conexi?n a MySQL durante su ejecuci?n.
+Repositorio correspondiente a la **Práctica 03** de la asignatura de Base de Datos. Este proyecto cuenta con una aplicación web desarrollada con Vite y TypeScript, scripts SQL para la creación y siembra de la base de datos, respaldos de seguridad y su despliegue activo en **GitHub Pages**.
 
-## An?lisis disponible
+🌐 **Enlace al proyecto publicado (GitHub Pages):**  
+👉 [https://Erick-tech958.github.io/Practicas_BDN_240485/Practica03/](https://erick-tech958.github.io/Practicas_BDN_240485/)
 
-El respaldo contiene 25 tablas, 226 columnas, 32 claves for?neas declaradas, 65 ?ndices (incluidas 25 PK), 28 vistas, 72 triggers, 3 procedimientos y 4 funciones. No se agregan relaciones inferidas sin evidencia expl?cita. Las descripciones y clasificaciones conceptuales se identifican como inferencias cuando no est?n declaradas en SQL.
+---
 
-Los conteos por tabla se reconstruyen contando las tuplas `INSERT` en cada bloque de datos del respaldo, sin ejecutar SQL: hay **116,522 registros** en total; seis tablas contienen filas y las otras 19 tienen cero filas declaradas en sus bloques. El ?nico `UPDATE` detectado est? dentro de la definici?n de un procedimiento y no forma parte de la carga del respaldo. El archivo `data/schema.json` contiene metadatos estructurales y conteos agregados; no incluye filas ni credenciales.
+## 📁 Estructura del Proyecto
 
-## Ejecuci?n local
-
-Requiere Node.js y npm. Desde la ra?z del proyecto:
-
-```bash
-npm install
-npm run dev
+```text
+Practica03/
+├── backups/           # Copias de seguridad y respaldos de la base de datos (.sql)
+├── data/              # Archivos de datos e información del proyecto
+├── docs/              # Archivos compilados para la publicación en GitHub Pages
+├── queries/           # Consultas SQL utilizadas en la práctica
+├── scripts/           # Scripts de automatización y utilidad
+├── seeds/             # Datos de prueba (semillas) para la base de datos
+├── .gitignore         # Archivos y carpetas excluidos de Git
+├── _build_metadata.py # Script auxiliar de metadatos para la compilación
+├── index.html         # Punto de entrada de la aplicación web
+├── package.json       # Dependencias y scripts del proyecto (Node.js)
+├── package-lock.json  # Control de versiones exactas de dependencias
+├── vite.config.ts     # Configuración del empaquetador Vite
+└── readme.md          # Documentación general de la práctica
 ```
 
-Vite sirve la aplicaci?n desde `docs/`. Para compilar los archivos est?ticos:
+---
 
-```bash
-npm run build
-```
+## 🛠️ Tecnologías Utilizadas
 
-La compilaci?n se genera en `dist/`. Para revisarla localmente:
+* **Base de Datos:** SQL (Consultas estructuradas, respaldos `.sql` y scripts de semillas).
+* **Frontend:** HTML5, TypeScript.
+* **Empaquetador y Build:** [Vite](https://vitejs.dev/).
+* **Despliegue & DevOps:** GitHub Pages, Python (scripting de metadatos).
+* **Control de Versiones:** Git & GitHub.
 
-```bash
-npm run preview
-```
+---
 
-## Publicaci?n en GitHub Pages con un solo archivo
+## 🚀 Instalación y Ejecución Local
 
-La aplicaci?n completa est? dentro de `index.html`: incluye estilos, c?digo JavaScript y el esquema con conteos. No necesita cargar archivos locales, dependencias, servidor ni conexi?n a MySQL. Para publicarla en GitHub Pages, sube ?nicamente `index.html` a la ra?z de la rama o carpeta configurada como Pages. No ejecutes `npm run build` para esa publicaci?n de un solo archivo.
+Para ejecutar este proyecto de manera local en tu equipo, sigue estos pasos:
 
-El respaldo SQL y los archivos de desarrollo que permanecen en este espacio de trabajo no son necesarios para que el sitio abra. No los incluyas al publicar el documento.
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/Erick-tech958/Practicas_BDN_240485.git
+   ```
 
-## Actualizar el modelo
+2. **Navegar a la carpeta de la práctica:**
+   ```bash
+   cd Practicas_BDN_240485/Practica03
+   ```
 
-`_build_metadata.py` lee el respaldo sin ejecutarlo y genera `data/schema.json`. El ?ndice HTML es una aplicaci?n compilada incluida en el repositorio; despu?s de cambiar el respaldo, la actualizaci?n de esa aplicaci?n requiere regenerar sus datos incrustados desde el modelo. No publiques copias del respaldo ni agregues registros personales al sitio.
+3. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
+
+4. **Ejecutar el servidor de desarrollo:**
+   ```bash
+   npm run dev
+   ```
+
+5. Abre tu navegador e ingresa a la dirección indicada en la terminal (por defecto `http://localhost:5173`).
+
+---
+
+## 🗄️ Gestión de la Base de Datos
+
+* **Respaldos:** Los archivos `.sql` generados se ubican en la carpeta `backups/`.
+* **Consultas:** Las peticiones SQL requeridas en la práctica están almacenadas en `queries/`.
+* **Semillas (Seeds):** Los archivos de carga de datos iniciales están en `seeds/`.
+
+---
+
+## ⚙️ Compilación y Despliegue
+
+Para actualizar los archivos de producción desplegados en GitHub Pages:
+
+1. **Generar la compilación en la carpeta `docs/`:**
+   ```bash
+   npm run build
+   ```
+
+2. **Subir los cambios a GitHub:**
+   ```bash
+   git add .
+   git commit -m "Actualización de build para GitHub Pages"
+   git push origin master
+   ```
+
+---
+
