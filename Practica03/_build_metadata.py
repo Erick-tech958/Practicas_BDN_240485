@@ -1,5 +1,34 @@
 import re, json, pathlib, collections, datetime
 src=pathlib.Path('backups/240485_27.10.26.sql').read_text(encoding='utf-8',errors='replace')
+# Count value tuples only in mysqldump data blocks; never execute the SQL.
+def count_dump_rows(sql):
+    counts=collections.Counter()
+    sections=list(re.finditer(r'(?im)^-- Dumping data for table `([^`]+)`\s*$',sql))
+    for index, marker in enumerate(sections):
+        stop=sections[index+1].start() if index+1<len(sections) else len(sql)
+        unlock=sql.find('UNLOCK TABLES;',marker.end(),stop)
+        if unlock>=0: stop=unlock
+        block=sql[marker.end():stop]
+        for insert in re.finditer(r'(?is)\bINSERT\s+INTO\s+`([^`]+)`\s*(?:\([^;]*?\)\s*)?VALUES\s*',block):
+            table=insert.group(1); pos=insert.end(); depth=0; quote=None; escaped=False; tuples=0
+            while pos<len(block):
+                char=block[pos]
+                if quote:
+                    if escaped: escaped=False
+                    elif char=='\\': escaped=True
+                    elif char==quote:
+                        if pos+1<len(block) and block[pos+1]==quote: pos+=1
+                        else: quote=None
+                elif char in "'\"`": quote=char
+                elif char=='(':
+                    if depth==0: tuples+=1
+                    depth+=1
+                elif char==')': depth=max(0,depth-1)
+                elif char==';' and depth==0: break
+                pos+=1
+            counts[table]+=tuples
+    return counts
+row_counts=count_dump_rows(src)
 tables={}
 for m in re.finditer(r'CREATE TABLE\s+`([^`]+)`\s*\((.*?)\)\s*ENGINE\s*=\s*([^;]+);',src,re.I|re.S):
     name,body,engine=m.group(1),m.group(2),m.group(3)
@@ -47,6 +76,7 @@ for m in re.finditer(r'CREATE TABLE\s+`([^`]+)`\s*\((.*?)\)\s*ENGINE\s*=\s*([^;]
     for chk in t['checks']:
         for c in t['columns']:
             if f'`{c["name"]}`' in chk['expression']: c['checks'].append(chk)
+    t['rows']=row_counts.get(name,0); t['countStatus']='Exacto desde INSERT' if t['rows'] else 'Cero filas declaradas en el bloque de datos'
     t['formalNotation']=name+'('+', '.join(c['name'] for c in t['columns'])+')'
     t['entityType']='Asociativa' if len(t['foreignKeys'])>=2 and len(t['primaryKey'])>=2 and set(t['primaryKey']).issubset({x for f in t['foreignKeys'] for x in f['columns']}) else 'Fuerte'
     tables[name]=t
@@ -65,7 +95,7 @@ views=re.findall(r'(?i)CREATE\s+(?:OR\s+REPLACE\s+)?VIEW\s+`([^`]+)`',src)
 triggers=re.findall(r'(?i)TRIGGER\s+`([^`]+)`',src)
 procedures=re.findall(r'(?i)PROCEDURE\s+`([^`]+)`',src)
 functions=re.findall(r'(?i)FUNCTION\s+`([^`]+)`',src)
-meta={'database':'db_test','source':'240485_27.10.26.sql','engine':'MySQL 8.0.36 / InnoDB','generated':'2026-11-06','tables':list(tables.values()),'relations':relations,'objects':{'views':views,'triggers':triggers,'procedures':procedures,'functions':functions},'counts':{'tables':len(tables),'columns':sum(len(t['columns']) for t in tables.values()),'primaryKeys':sum(bool(t['primaryKey']) for t in tables.values()),'foreignKeys':len(relations),'indexes':sum(len(t['indexes']) for t in tables.values()),'views':len(views),'triggers':len(triggers),'procedures':len(procedures),'functions':len(functions),'verifiedRows':None},'notes':['Los conteos finales de filas no se reconstruyen: hay actualizaciones posteriores a inserciones y no se ejecutó el SQL.','Descripciones funcionales y algunas clasificaciones conceptuales son inferencias de los nombres y tipos.','No se detectaron relaciones inferidas automáticamente; el diagrama muestra solo claves foráneas declaradas.']}
+meta={'database':'db_test','source':'240485_27.10.26.sql','engine':'MySQL 8.0.36 / InnoDB','generated':'2026-11-09','tables':list(tables.values()),'relations':relations,'objects':{'views':views,'triggers':triggers,'procedures':procedures,'functions':functions},'counts':{'tables':len(tables),'columns':sum(len(t['columns']) for t in tables.values()),'primaryKeys':sum(bool(t['primaryKey']) for t in tables.values()),'foreignKeys':len(relations),'indexes':sum(len(t['indexes'])+bool(t['primaryKey']) for t in tables.values()),'views':len(views),'triggers':len(triggers),'procedures':len(procedures),'functions':len(functions),'verifiedRows':sum(row_counts.get(n,0) for n in tables)},'notes':['Conteo por tabla obtenido contando tuplas INSERT en su bloque de datos del dump; el SQL no se ejecut?.','Las tablas sin INSERT en su bloque se reportan con cero filas en el respaldo.','Descripciones funcionales y algunas clasificaciones conceptuales son inferencias de los nombres y tipos.','No se detectaron relaciones inferidas automáticamente; el diagrama muestra solo claves foráneas declaradas.']}
 pathlib.Path('data').mkdir(exist_ok=True)
 pathlib.Path('data/schema.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2),encoding='utf-8')
 print('tables',len(tables),'columns',meta['counts']['columns'],'fks',len(relations),'indexes',meta['counts']['indexes'],'objs',meta['objects'])

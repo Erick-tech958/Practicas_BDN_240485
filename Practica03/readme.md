@@ -1,81 +1,40 @@
-# Documentacion de la Práctica 03. Manipulacion de datos, Relaciones, Procedimientos, Funciones y Eventos en Conexiones Remotas
+# Diccionario de datos y modelo EER ? db_test
 
-# Prácticas de la asignatura Optativa I: Bases De Datos en la Nube
-## Ing. en Tecnologías de la Información e Innovación Digital
-### Docente: M.T.I Marco A. Ramírez Hernandez
-Periodo: Septiembre - Diciembre 2026
+Aplicaci?n est?tica de una sola p?gina para explorar el diccionario de datos, el dashboard, las relaciones y el diagrama EER del respaldo `backups/240485_27.10.26.sql`. La aplicaci?n se encuentra en `docs/index.html`, comparte un ?nico modelo estructural y no requiere conexi?n a MySQL durante su ejecuci?n.
 
----
+## An?lisis disponible
 
-|ID|Numero de Práctica|Nombre de la Práctica|Potenciador|Estatus|
-|---|---|---|---|---|
-|1.|Práctica 02|Conexión Remota en MYSQL|42|💚Concluida|
-|2.|Conexiones Remotas para Bases de Datos SQL 1|Crear y administrar usuarios y privilegios para conexiones desde internet o redes locales|60|💚Concluida|
-|3.|Práctica 03|Manipulación de datos en conexiones remotas|100|💚Concluida|
+El respaldo contiene 25 tablas, 226 columnas, 32 claves for?neas declaradas, 65 ?ndices (incluidas 25 PK), 28 vistas, 72 triggers, 3 procedimientos y 4 funciones. No se agregan relaciones inferidas sin evidencia expl?cita. Las descripciones y clasificaciones conceptuales se identifican como inferencias cuando no est?n declaradas en SQL.
 
----
+Los conteos por tabla se reconstruyen contando las tuplas `INSERT` en cada bloque de datos del respaldo, sin ejecutar SQL: hay **116,522 registros** en total; seis tablas contienen filas y las otras 19 tienen cero filas declaradas en sus bloques. El ?nico `UPDATE` detectado est? dentro de la definici?n de un procedimiento y no forma parte de la carga del respaldo. El archivo `data/schema.json` contiene metadatos estructurales y conteos agregados; no incluye filas ni credenciales.
 
-# 📚 Diccionario de Datos Actualizado
+## Ejecuci?n local
 
-Se generó el diccionario de datos de la base de datos `db_test` mediante Archify, permitiendo visualizar la estructura de las tablas, atributos, tipos de datos, claves primarias, claves foráneas y relaciones existentes.
+Requiere Node.js y npm. Desde la ra?z del proyecto:
 
-El diccionario de datos se encuentra publicado en GitHub Pages para su consulta.
+```bash
+npm install
+npm run dev
+```
 
-### 🔗 Enlace al Diccionario de Datos y Modelo Entidad-Relación Extendido (EER)
+Vite sirve la aplicaci?n desde `docs/`. Para compilar los archivos est?ticos:
 
-**[📖 Consultar Diccionario de Datos Actualizado y Modelo Entidad-Relación Extendido (EER)](  https://erick-tech958.github.io/Practicas_BDN_240485/)**
+```bash
+npm run build
+```
 
+La compilaci?n se genera en `dist/`. Para revisarla localmente:
 
+```bash
+npm run preview
+```
 
----
+## Publicaci?n en GitHub Pages con un solo archivo
 
-# Práctica 02 - Base de Datos `db_test`
+La aplicaci?n completa est? dentro de `index.html`: incluye estilos, c?digo JavaScript y el esquema con conteos. No necesita cargar archivos locales, dependencias, servidor ni conexi?n a MySQL. Para publicarla en GitHub Pages, sube ?nicamente `index.html` a la ra?z de la rama o carpeta configurada como Pages. No ejecutes `npm run build` para esa publicaci?n de un solo archivo.
 
-## 📋 Descripción General
-Esta práctica consiste en el diseño, implementación, conexión remota y respaldo de la base de datos relacional **`db_test`** utilizando MySQL (versión 8.0.36). El proyecto incluye la gestión de usuarios, pruebas de operaciones colaborativas en red y un sistema automatizado de registro de auditoría (*logs*) mediante disparadores (*triggers*) para el seguimiento de cambios.
+El respaldo SQL y los archivos de desarrollo que permanecen en este espacio de trabajo no son necesarios para que el sitio abra. No los incluyas al publicar el documento.
 
----
+## Actualizar el modelo
 
-## 🗄️ Estructura de la Base de Datos
-
-La base de datos contiene las siguientes tablas principales:
-
-### 1. `tb_users`
-Almacena la información de los usuarios registrados en el sistema.
-
-* **`ID`**: Identificador único (Clave primaria, autoincrementable).
-* **`email`**: Correo electrónico del usuario (Único, obligatorio).
-* **`nickname`**: Nombre de usuario o apodo (Único, obligatorio).
-* **`password`**: Contraseña cifrada del usuario.
-* **`creation_date`**: Fecha y hora de creación del registro.
-* **`last_update`**: Fecha y hora de la última modificación.
-* **`last_login`**: Fecha y hora del último acceso.
-
-### 2. `tb_logs`
-Almacena el historial de auditoría de las acciones realizadas sobre la tabla de usuarios.
-
-* **`ID`**: Identificador único del registro de log.
-* **`table_name`**: Nombre de la tabla afectada (`tb_users`).
-* **`operation`**: Tipo de operación realizada (`INSERT`, `UPDATE`, `DELETE`).
-* **`db_users`**: Usuario de la base de datos y host desde el que se ejecutó la acción.
-* **`description`**: Detalle descriptivo del cambio o evento registrado.
-* **`operation_date`**: Marca de tiempo exacta de cuándo ocurrió el evento.
-* **`operation_status`**: Estado de la operación.
-
----
-
-## 🌐 Conexión Colaborativa y Pruebas Remotas
-Durante el desarrollo de la práctica, se realizaron conexiones hacia instancias de bases de datos de compañeros de equipo mediante comandos y configuración de red para simular un entorno distribuido:
-
-* **Conexión remota**: Se establecieron enlaces mediante IP/host para acceder de manera concurrente al servidor de base de datos de la estación de trabajo de un compañero.
-* **Ejecución de operaciones CRUD**: Se realizaron pruebas de inserción (`INSERT`), actualización (`UPDATE`) y eliminación (`DELETE`) de registros de manera remota.
-* **Trazabilidad en Logs**: Gracias a los registros almacenados en `tb_logs`, se pudo comprobar qué usuario y desde qué equipo (*host*) se efectuaron modificaciones específicas (por ejemplo, cambios de correos electrónicos y bajas de registros).
-
----
-
-## ⚙️ Automatización (Triggers)
-Para garantizar la integridad y trazabilidad de las acciones colaborativas, se implementaron tres triggers en la tabla `tb_users`:
-
-1. **`trg_users_after_insert`**: Registra automáticamente en `tb_logs` cada vez que se crea un nuevo usuario.
-2. **`trg_users_after_update`**: Detecta cambios específicos en campos como `email` o `nickname` y guarda los valores anteriores y nuevos en el log.
-3. **`trg_users_after_delete`**: Almacena un registro de auditoría cuando un usuario es eliminado del sistema.
+`_build_metadata.py` lee el respaldo sin ejecutarlo y genera `data/schema.json`. El ?ndice HTML es una aplicaci?n compilada incluida en el repositorio; despu?s de cambiar el respaldo, la actualizaci?n de esa aplicaci?n requiere regenerar sus datos incrustados desde el modelo. No publiques copias del respaldo ni agregues registros personales al sitio.

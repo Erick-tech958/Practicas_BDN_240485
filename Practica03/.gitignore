@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.archify/
+.headless-profile*/
+chrome-console.log
+chrome-dom.out
+docs-preview.png
+.headless-count-interaction
+.headless-count-cdp
+.headless-interaction
